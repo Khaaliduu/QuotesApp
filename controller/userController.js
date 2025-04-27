@@ -46,6 +46,9 @@ export const createUser = async (req, res) => {
   try {
     const { image, name, email, phone, password, isAdmin } = req.body;
 
+    // Ensure phone is a number (convert from string to number if necessary)
+    const phoneNumber = typeof phone === 'string' ? parseFloat(phone) : phone;
+
     const isUserExists = await User.findOne({ email });
 
     if (isUserExists) {
@@ -55,7 +58,7 @@ export const createUser = async (req, res) => {
         image,
         name,
         email,
-        phone,
+        phone: phoneNumber,  // Ensure phone is a number
         password,
         isAdmin: isAdmin || false,
       });
@@ -72,13 +75,16 @@ export const updateUser = async (req, res) => {
   try {
     const { image, name, email, phone, password, isAdmin } = req.body;
 
+    // Ensure phone is a number (convert from string to number if necessary)
+    const phoneNumber = typeof phone === 'string' ? parseFloat(phone) : phone;
+
     const user = await User.findById(req.params.id);
 
     if (user) {
       user.image = image || user.image;
       user.name = name || user.name;
       user.email = email || user.email;
-      user.phone = phone || user.phone;
+      user.phone = phoneNumber || user.phone;  // Ensure phone is a number
       user.password = password || user.password;
       user.isAdmin = isAdmin !== undefined ? isAdmin : user.isAdmin;
 
