@@ -40,7 +40,6 @@ export const login = async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 };
-
 // Create New User
 export const createUser = async (req, res) => {
   try {
@@ -55,10 +54,10 @@ export const createUser = async (req, res) => {
       res.status(400).json({ message: "User already exists" });
     } else {
       const newUser = await User.create({
-        image,
+        image: image || 'server/uploads/user.png', // Haddii image la'aan yahay default-user.jpg dhig
         name,
         email,
-        phone: phoneNumber,  // Ensure phone is a number
+        phone: phoneNumber,
         password,
         isAdmin: isAdmin || false,
       });
@@ -69,7 +68,6 @@ export const createUser = async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 };
-
 // Update User
 export const updateUser = async (req, res) => {
   try {
@@ -81,10 +79,10 @@ export const updateUser = async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
-      user.image = image || user.image;
+      user.image = image || user.image; // Haddii image cusub yimaado update, haddii kale sii hay kii hore
       user.name = name || user.name;
       user.email = email || user.email;
-      user.phone = phoneNumber || user.phone;  // Ensure phone is a number
+      user.phone = phoneNumber || user.phone;
       user.password = password || user.password;
       user.isAdmin = isAdmin !== undefined ? isAdmin : user.isAdmin;
 
@@ -97,6 +95,7 @@ export const updateUser = async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 };
+
 
 // Delete User
 export const deleteUser = async (req, res) => {
