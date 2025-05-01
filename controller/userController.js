@@ -54,7 +54,7 @@ export const createUser = async (req, res) => {
       res.status(400).json({ message: "User already exists" });
     } else {
       const newUser = await User.create({
-        image: image || 'server/uploads/user.png', // Haddii image la'aan yahay default-user.jpg dhig
+        image: image || 'https://i.pravatar.cc/150?img=3', // Haddii image la'aan yahay default-user.jpg dhig
         name,
         email,
         phone: phoneNumber,
