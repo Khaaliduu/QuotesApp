@@ -30,16 +30,15 @@ const userSchema = new mongoose.Schema({
         required:true,
         default:false
     },
-      
-  wishlist:[
-    {
-    //   course:{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     required:true,
-    //     ref: 'courses'
-    //   }
-    }
-], // this is favrite 
+    wishlist: [
+      {
+        quote: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Quote",
+        },
+      },
+    ],
+    // is is favrite 
 });
 
 
