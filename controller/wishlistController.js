@@ -112,8 +112,8 @@ export const addToWishlist  = async(req, res) => {
                 isQuotesFound = true;
               }
           }
-          if (isCourseFound) {
-             res.status(400).json({message:"aleardy added"})
+          if (isQuotesFound) {
+             res.status(400).json({message:"already added"})
 
           }else{
               user.wishlist.push({quote})
