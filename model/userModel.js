@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
       {
         quote: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Quote",
+          ref: "Quotes",
         },
       },
     ],
@@ -43,5 +43,5 @@ const userSchema = new mongoose.Schema({
 
 
 // Export the model
-const User = mongoose.model('User', userSchema);
-export default User;
+const Users = mongoose.model('Users', userSchema);
+export default Users;
