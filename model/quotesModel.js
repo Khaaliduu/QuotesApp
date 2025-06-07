@@ -21,11 +21,8 @@ const quoteSchema = new mongoose.Schema(
       required: true,
     },
   },
-  {
-    timestamps: true,
-  }
 );
 
-const Quotes = mongoose.model('Quotes', quoteSchema);
+const Quotes = mongoose.model('Quote', quoteSchema);
 
 export default Quotes;

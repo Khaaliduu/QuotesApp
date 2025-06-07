@@ -34,7 +34,9 @@ const userSchema = new mongoose.Schema({
       {
         quote: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Quotes",
+          required:true,
+
+          ref: "Quote",
         },
       },
     ],
