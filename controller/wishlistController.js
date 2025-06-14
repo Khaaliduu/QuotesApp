@@ -10,7 +10,7 @@ export const addToWishlist  = async(req, res) => {
       const {userId, quoteId} = req.body;
 
       const quote = await Quotes.findById(quoteId);
-      let user = await Users.findById(userId).populate("wishlist.quote")
+      let user = await Users.findById(userId).populate("wishlist.Quote")
       if (user.wishlist.length == 0) {
           user.wishlist.push({quote})
       
