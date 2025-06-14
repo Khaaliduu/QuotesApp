@@ -1,44 +1,41 @@
 import Users from "../model/userModel.js";
 import Quotes from "../model/quotesModel.js";
 
-// ✅ Add to wishlist
+// ✅ Add to wishlist (with null-check)
 export const addToWishlist = async (req, res) => {
   try {
     const { userId, quoteId } = req.body;
 
-    // Hubi in quote uu jiro
+    // 1. Hubi in quote jira
     const quote = await Quotes.findById(quoteId);
     if (!quote) {
       return res.status(404).json({ message: "Quote not found" });
     }
 
-    // Hel user + populate quotes
+    // 2. Hel user + populate
     let user = await Users.findById(userId).populate("wishlist.quote");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Check if quote already exists
-    const alreadyExists = user.wishlist.some((item) =>
-      item.quote._id.equals(quote._id)
-    );
+    // 3. Ka fakar quotes yaa horey ugu jira
+    const alreadyExists = user.wishlist.some((item) => {
+      return item.quote && item.quote._id && item.quote._id.equals(quote._id);
+    });
 
     if (alreadyExists) {
       return res.status(400).json({ message: "Quote already in wishlist" });
     }
 
-    // Add quote to wishlist
+    // 4. Haddii aysan jirin hore, ku dar
     user.wishlist.push({ quote: quote._id });
-
-    // Save user
     await user.save();
 
-    // Dib u hel user-ka si updated list loo celiyo
+    // 5. Return updated user
     user = await Users.findById(userId).populate("wishlist.quote");
-
     res.status(200).json(user);
   } catch (e) {
-    console.error("Error adding to wishlist:", e);
+    console.error("Error in addToWishlist:", e);
     res.status(500).json({ error: e.message });
   }
 };
