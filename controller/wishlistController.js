@@ -13,7 +13,7 @@ export const addToWishlist = async (req, res) => {
     }
 
     // 2. Hel user + populate
-    let user = await Users.findById(userId).populate("wishlist.quote");
+    let user = await Users.findById(req.user._id).populate("wishlist.quote");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -32,7 +32,7 @@ export const addToWishlist = async (req, res) => {
     await user.save();
 
     // 5. Return updated user
-    user = await Users.findById(userId).populate("wishlist.quote");
+    user = await Users.findById(req.user._id).populate("wishlist.quote");
     res.status(200).json(user);
   } catch (e) {
     console.error("Error in addToWishlist:", e);
